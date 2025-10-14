@@ -1,5 +1,5 @@
 <template>
-  
+
     <section class="slider swiper-container">
         <div class="swiper-wrapper">
             <section class="slide slide-1 swiper-slide">
@@ -69,21 +69,15 @@
                             <img src="/images/arrow-prev.svg" alt="icon: arrow-prev">
                         </button>
                     </div>
-                    <!-- /.col-1 -->
                     <div class="col-1">
                         <button class="slider-button slider-button-next">
                             <img src="/images/arrow-next.svg" alt="icon: arrow-prev">
                         </button>
                     </div>
-                    <!-- /.col-1 -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
         </div>
-        <!-- /.slider-nav -->
     </section>
-    <!-- /.slider -->
     <section class="special-offers container pt-5 pb-4">
         <div class="row mb-4">
             <div class="col-xl-6">
@@ -95,9 +89,9 @@
                         <img src="/images/arrow.svg" alt="icon: arrow" class="button-icon">
                     </button>
                 </div>
-                <!-- /.card -->
+            
             </div>
-            <!-- /.col-6 -->
+          
             <div class="col-xl-6">
                 <div class="card card-2 mb-4">
                     <h3 class="card-title text-light">Catch the Sun: Spring Break Styles From $5.99</h3>
@@ -107,7 +101,7 @@
                         <img src="/images/arrow.svg" alt="icon: arrow" class="button-icon">
                     </button>
                 </div>
-                <!-- /.card -->
+              
             </div>
             <!-- /.col-6 -->
             <div class="col-xl-9 col-lg-6 mb-4">
@@ -143,80 +137,32 @@
             </div>
             <!-- /.col-9 -->
             <div class="col-3 d-flex justify-content-end">
-                <a href="#" class="more">View All</a>
+                <NuxtLink :to="{ path: '/products', query: { field: 'label', name: 'New' } }" class="more" >View All</NuxtLink>
+                
             </div>
             <!-- /.col-3 -->
         </div>
-        <!-- /.row -->
+
         <div class="short-goods row">
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-3 col-sm-6" v-for="card in data">
                 <div class="goods-card">
-                    <span class="label">New</span>
-                    <!-- /.label --><img src="/images/image-119.jpg" alt="image: Hoodie" class="goods-image">
-                    <h3 class="goods-title">Embroidered Hoodie</h3>
-                    <!-- /.goods-title -->
-                    <p class="goods-description">Yellow/Lilac/Fuchsia/Orange</p>
-                    <!-- /.goods-description -->
-                    <!-- /.goods-price -->
+                    <span class="label">{{ card.label.toUpperCase() }}</span>
+                    <img :src="card.img" alt="image: Hoodie" class="goods-image">
+                    <h3 class="goods-title">{{ card.name }}</h3>
+                    <p class="goods-description">{{ card.description }}</p>
                     <button class="button goods-card-btn add-to-cart" data-id="012">
-                        <span class="button-price">$89</span>
+                        <span class="button-price">${{ card.price }}</span>
                     </button>
                 </div>
-                <!-- /.goods-card -->
             </div>
-            <!-- /.col-3 -->
-            <div class="col-lg-3 col-sm-6">
-                <div class="goods-card">
-                    <span class="label">New</span>
-                    <!-- /.label --><img src="/images/image-120.jpg" alt="image: Faded Beach Trousers"
-                        class="goods-image">
-                    <h3 class="goods-title">Faded Beach Trousers</h3>
-                    <!-- /.goods-title -->
-                    <p class="goods-description">Navy/Ochre/Black/Khaki</p>
-                    <!-- /.goods-description -->
-                    <button class="button goods-card-btn add-to-cart" data-id="011">
-                        <span class="button-price">$139</span>
-                    </button>
-                    <!-- /.goods-price -->
-                </div>
-                <!-- /.goods-card -->
-            </div>
-            <!-- /.col-3 -->
-            <div class="col-lg-3 col-sm-6">
-                <div class="goods-card">
-                    <span class="label">New</span>
-                    <!-- /.label --><img src="/images/image-121.jpg" alt="image: Text T-Shirt" class="goods-image">
-                    <h3 class="goods-title">Text T-Shirt</h3>
-                    <!-- /.goods-title -->
-                    <p class="goods-description">White</p>
-                    <!-- /.goods-description -->
-                    <button class="button goods-card-btn add-to-cart" data-id="010">
-                        <span class="button-price">$59</span>
-                    </button>
-                    <!-- /.goods-price -->
-                </div>
-                <!-- /.goods-card -->
-            </div>
-            <!-- /.col-3 -->
-            <div class="col-lg-3 col-sm-6">
-                <div class="goods-card">
-                    <span class="label">New</span>
-                    <!-- /.label --><img src="/images/image-122.jpg" alt="image: Striped Long Sleeve Shirt"
-                        class="goods-image">
-                    <h3 class="goods-title">Striped Long Sleeve Shirt</h3>
-                    <!-- /.goods-title -->
-                    <p class="goods-description">Red/Sky Blue</p>
-                    <!-- /.goods-description -->
-                    <button class="button goods-card-btn add-to-cart" data-id="001">
-                        <span class="button-price">$119</span>
-                    </button>
-                    <!-- /.goods-price -->
-                </div>
-                <!-- /.goods-card -->
-            </div>
-            <!-- /.col-3 -->
+
         </div>
-        <!-- /.row -->
+
     </section>
-   
+
 </template>
+<script setup>
+// const { data } = await useFetch('https://wildberris-6298f-default-rtdb.firebaseio.com/db.json')
+const { data } = await useFetch('/api/new-products')
+
+</script>

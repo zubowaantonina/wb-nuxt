@@ -89,9 +89,9 @@
                         <img src="/images/arrow.svg" alt="icon: arrow" class="button-icon">
                     </button>
                 </div>
-            
+
             </div>
-          
+
             <div class="col-xl-6">
                 <div class="card card-2 mb-4">
                     <h3 class="card-title text-light">Catch the Sun: Spring Break Styles From $5.99</h3>
@@ -101,7 +101,7 @@
                         <img src="/images/arrow.svg" alt="icon: arrow" class="button-icon">
                     </button>
                 </div>
-              
+
             </div>
             <!-- /.col-6 -->
             <div class="col-xl-9 col-lg-6 mb-4">
@@ -137,8 +137,9 @@
             </div>
             <!-- /.col-9 -->
             <div class="col-3 d-flex justify-content-end">
-                <NuxtLink :to="{ path: '/products', query: { field: 'label', name: 'New' } }" class="more" >View All</NuxtLink>
-                
+                <NuxtLink :to="{ path: '/products', query: { field: 'label', name: 'New' } }" class="more">View All
+                </NuxtLink>
+
             </div>
             <!-- /.col-3 -->
         </div>
@@ -146,11 +147,11 @@
         <div class="short-goods row">
             <div class="col-lg-3 col-sm-6" v-for="card in data">
                 <div class="goods-card">
-                    <span class="label">{{ card.label.toUpperCase() }}</span>
+                    <span class="label">{{ titleFormat(card.label) }}</span>
                     <img :src="card.img" alt="image: Hoodie" class="goods-image">
                     <h3 class="goods-title">{{ card.name }}</h3>
                     <p class="goods-description">{{ card.description }}</p>
-                    <button class="button goods-card-btn add-to-cart" data-id="012">
+                    <button class="button goods-card-btn add-to-cart" @click="addToCart(card)">
                         <span class="button-price">${{ card.price }}</span>
                     </button>
                 </div>
@@ -161,8 +162,25 @@
     </section>
 
 </template>
-<script setup>
-// const { data } = await useFetch('https://wildberris-6298f-default-rtdb.firebaseio.com/db.json')
-const { data } = await useFetch('/api/new-products')
+<script setup lang="ts">
+import type { CartItem } from '~/models/cart-item.model'
+import type { Product } from "~/models/products-model"
 
+const { data } = await useFetch('/api/new-products')
+const cartItems = useCart()
+const addToCart = (product: Product) => {
+    const findItem = cartItems.value.find(c => c.id === product.id)
+    if (findItem) {
+        findItem.count++
+    } else {
+        const newCartItem: CartItem = {
+            id: product.id,
+            name: product.name,
+            price: parseInt(product.price),
+            count: 1
+        }
+        cartItems.value.push(newCartItem)
+    }
+
+}
 </script>
